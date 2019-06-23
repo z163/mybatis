@@ -1,8 +1,7 @@
 package com.kkb.mybatis.mapper;
 
-import static org.junit.Assert.*;
-
 import java.io.InputStream;
+import java.util.List;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -43,6 +42,27 @@ public class UserMapperTest {
 		//调用UserMapper对象的findUserById
 		User user = userMapper.findUserById(1);
 		System.out.println(user);
+	}
+
+	// 根据用户名称模糊查询用户信息
+	@Test
+	public void testFindUserByUsername() {
+		// 数据库会话实例
+		SqlSession sqlSession = null;
+		try {
+			// 创建数据库会话实例sqlSession
+			sqlSession = sqlSessionFactory.openSession();
+			UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+			// 查询单个记录，根据用户id查询用户信息
+			List<User> list = userMapper.findUserByUsername("小明");
+			System.out.println("result size: " + list.size());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (sqlSession != null) {
+				sqlSession.close();
+			}
+		}
 	}
 
 	//@Test
@@ -123,5 +143,4 @@ public class UserMapperTest {
 			}
 		}
 	}
-
 }

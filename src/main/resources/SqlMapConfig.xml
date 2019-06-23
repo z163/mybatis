@@ -33,11 +33,11 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<!-- 加载映射文件 -->
 	<mappers>
 		<mapper resource="UserMapper.xml" />
-		<mapper resource="mapper/UserMapper.xml" />
+		<!-- <mapper resource="mapper/UserMapper.xml" /> -->
 		<!-- <mapper class="com.kkb.mybatis.mapper.UserMapper"/> -->
 		<!-- <mapper url="file://d:/sqlmap/User.xml"/> -->
 
 		<!-- 批量加载 -->
-		<!-- <package name="com.kkb.mybatis.mapper" /> -->
+		<package name="com.kkb.mybatis.mapper" />
 	</mappers>
 </configuration>
