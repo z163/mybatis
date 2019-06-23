@@ -45,9 +45,83 @@ public class UserMapperTest {
 		System.out.println(user);
 	}
 
+	//@Test
+	//public void testInsert() {
+	//	// 数据库会话实例
+	//	SqlSession sqlSession = null;
+	//	try {
+	//		// 创建数据库会话实例sqlSession
+	//		sqlSession = sqlSessionFactory.openSession();
+	//		// 添加用户信息
+	//		User user = new User();
+	//		user.setUsername("张小明");
+	//		user.setAddress("河南郑州");
+	//		user.setSex("1");
+	//		// user.setPrice(1999.9f);
+	//		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+	//		userMapper.insertUser(user);  // 1
+	//		//提交事务
+	//		sqlSession.commit();
+	//		System.out.println("insertion is tested: " + user.getId());
+	//	} catch (Exception e) {
+	//		e.printStackTrace();
+	//	} finally {
+	//		if (sqlSession != null) {
+	//			sqlSession.close();
+	//		}
+	//	}
+	//}
+
+	// 根据id删除用户
 	@Test
-	public void testInsertUser() {
-		// fail("Not yet implemented");
+	public void testDelete() {
+		// 数据库会话实例
+		SqlSession sqlSession = null;
+		try {
+			// 创建数据库会话实例sqlSession
+			sqlSession = sqlSessionFactory.openSession();
+			UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+			// 删除用户
+			userMapper.deleteUserById(41);
+			// 提交事务
+			sqlSession.commit();
+			System.out.println("deletion is tested: " + 41);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (sqlSession != null) {
+				sqlSession.close();
+			}
+		}
+	}
+
+	// 更新用户信息
+	@Test
+	public void testUpdate() {
+		// 数据库会话实例
+		SqlSession sqlSession = null;
+		try {
+			// 创建数据库会话实例sqlSession
+			sqlSession = sqlSessionFactory.openSession();
+			// 添加用户信息
+			User user = new User();
+			user.setId(26);
+			user.setUsername("张z明");
+			user.setAddress("河南郑州");
+			user.setSex("1");
+			// user.setPrice(1999.9f);
+			UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+			userMapper.updateUser(user);
+			// 提交事务
+			sqlSession.commit();
+			System.out.println("update is tested");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (sqlSession != null) {
+				sqlSession.close();
+			}
+		}
 	}
 
 }

@@ -14,6 +14,7 @@ import com.kkb.mybatis.po.User;
 public class MybatisDemo {
 	
 	private SqlSessionFactory sqlSessionFactory;
+	private int myKey;
 
 	/**
 	 * @Before注解的方法会在@Test注解的方法之前执行
@@ -43,5 +44,103 @@ public class MybatisDemo {
 		System.out.println(user);
 		//释放资源
 		sqlSession.close();
+		System.out.println("selection tested");
+	}
+
+	// 根据用户名称模糊查询用户信息
+	@Test
+	public void testFindUserByUsername() {
+		// 数据库会话实例
+		SqlSession sqlSession = null;
+		try {
+			// 创建数据库会话实例sqlSession
+			sqlSession = sqlSessionFactory.openSession();
+			// 查询单个记录，根据用户id查询用户信息
+			List<User> list = sqlSession.selectList("com.kkb.mybatis.mapper.UserMapper.findUserByUsername", "小明");
+			System.out.println(list.size());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (sqlSession != null) {
+				sqlSession.close();
+			}
+		}
+	}
+
+	//@Test
+	//public void testInsert() {
+	//	// 数据库会话实例
+	//	SqlSession sqlSession = null;
+	//	try {
+	//		// 创建数据库会话实例sqlSession
+	//		sqlSession = sqlSessionFactory.openSession();
+	//		// 添加用户信息
+	//		User user = new User();
+	//		user.setUsername("张小明");
+	//		user.setAddress("河南郑州");
+	//		user.setSex("1");
+	//		// user.setPrice(1999.9f);
+	//		int key = sqlSession.insert("com.kkb.mybatis.mapper.UserMapper.insertUser", user);  // 1
+	//		//提交事务
+	//		sqlSession.commit();
+	//		myKey = user.getId();
+	//		System.out.println("insertion is tested: " + user.getId());
+	//	} catch (Exception e) {
+	//		e.printStackTrace();
+	//	} finally {
+	//		if (sqlSession != null) {
+	//			sqlSession.close();
+	//		}
+	//	}
+	//}
+
+	// 根据id删除用户
+	@Test
+	public void testDelete() {
+		// 数据库会话实例
+		SqlSession sqlSession = null;
+		try {
+			// 创建数据库会话实例sqlSession
+			sqlSession = sqlSessionFactory.openSession();
+			// 删除用户
+			sqlSession.delete("com.kkb.mybatis.mapper.UserMapper.deleteUserById", 41);
+			// 提交事务
+			sqlSession.commit();
+			System.out.println("deletion is tested: " + 41);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (sqlSession != null) {
+				sqlSession.close();
+			}
+		}
+	}
+
+	// 更新用户信息
+	@Test
+	public void testUpdate() {
+		// 数据库会话实例
+		SqlSession sqlSession = null;
+		try {
+			// 创建数据库会话实例sqlSession
+			sqlSession = sqlSessionFactory.openSession();
+			// 添加用户信息
+			User user = new User();
+			user.setId(26);
+			user.setUsername("张x明");
+			user.setAddress("河南郑州");
+			user.setSex("1");
+			// user.setPrice(1999.9f);
+			sqlSession.update("com.kkb.mybatis.mapper.UserMapper.updateUser", user);
+			// 提交事务
+			sqlSession.commit();
+			System.out.println("update is tested");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (sqlSession != null) {
+				sqlSession.close();
+			}
+		}
 	}
 }
