@@ -67,6 +67,18 @@ public class MybatisDemo {
 			}
 		}
 	}
+	
+	@Test
+	public void testFindUserListByName() {
+		//由SqlSessionFactory工厂去创建SqlSession（会话）
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+
+		//调用sqlsession接口，去实现数据库的增删改查操作
+		List<User> list = sqlSession.selectList("test.findUserListByName", "小明");
+		System.out.println(list);
+		//释放资源
+		sqlSession.close();
+	}
 
 	//@Test
 	//public void testInsert() {
@@ -142,19 +154,6 @@ public class MybatisDemo {
 				sqlSession.close();
 			}
 		}
-	}
-	
-	@Test
-	public void testFindUserListByName() {
-		//由SqlSessionFactory工厂去创建SqlSession（会话）
-		SqlSession sqlSession = sqlSessionFactory.openSession();
-
-		//调用sqlsession接口，去实现数据库的增删改查操作
-		List<User> list = sqlSession.selectList("test.findUserListByName", "小明");
-
-		System.out.println(list);
-		//释放资源
-		sqlSession.close();
 	}
 
 	//@Test
