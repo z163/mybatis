@@ -1,6 +1,7 @@
 package com.kkb.mybatis.po;
 
 import java.util.Date;
+import java.util.List;
 
 public class User {
 
@@ -9,6 +10,14 @@ public class User {
 	private Date birthday;
 	private String sex;
 	private String address;
+	private List<Orders> orders;
+
+	public List<Orders> getOrders() {
+		return orders;
+	}
+	public void setOrders(List<Orders> orders) {
+		this.orders = orders;
+	}
 	public int getId() {
 		return id;
 	}

@@ -6,7 +6,59 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="test">
 	<!-- id：指定MappedStatement对象的唯一标识 -->
 	<!-- 对象参数绑定：使用的是OGNL -->
-	<select id="findUserById" parameterType="int" resultType="com.kkb.mybatis.po.User">
-		SELECT * FROM user WHERE id = #{id}
+	<select id="findUserById" parameterType="int" resultType="com.kkb.mybatis.po.User" >
+		SELECT id FROM user WHERE id = #{id}
+	</select>
+
+	<select id="findUserListByName" parameterType="string" resultType="com.kkb.mybatis.po.User">
+		SELECT * FROM user WHERE username LIKE '%${value}%'
+	</select>
+
+	<insert id="insertUser" parameterType="com.kkb.mybatis.po.User" useGeneratedKeys="true">
+		INSERT INTO user (username,sex,birthday,address) VALUES (#{username},#{sex},#{birthday},#{address})
+	</insert>
+
+	<insert id="insertUserByVO" parameterType="com.kkb.mybatis.po.UserQueryVO" useGeneratedKeys="true">
+		INSERT INTO user (username,sex,birthday,address) VALUES (#{user.username},#{user.sex},#{user.birthday},#{user.address})
+	</insert>
+
+	<!-- <select id="testResultMap" parameterType="int" resultType="com.kkb.mybatis.po.User">
+		SELECT id,username username_,sex sex_ FROM user WHERE id = #{id}
+	</select> -->
+
+	<resultMap type="com.kkb.mybatis.po.User" id="testResultMap">
+		<id column="id_" property="id"/>
+		<result  column="username_" property="username"/>
+		<result  column="sex_" property="sex"/>
+	</resultMap>
+	<select id="testResultMap" parameterType="int" resultMap="testResultMap">
+		SELECT id id_,username username_,sex sex_ FROM user WHERE id = #{id}
+	</select>
+
+	<resultMap type="com.kkb.mybatis.po.User" id="userAndOrderRstMap">
+		<!-- 映射外层对象：user信息 -->
+		<id column="id" property="id"/>
+		<result  column="username" property="username"/>
+		<result  column="sex" property="sex"/>
+		<result  column="address" property="address"/>
+		<!-- 映射嵌套对象：orders信息  （一对多） -->
+		<!-- association的类型需要使用javaType来指定 -->
+		<collection property="orders" ofType="com.kkb.mybatis.po.Orders">
+			<!-- id主键映射 -->
+			<id column="oid" property="id"/>
+
+			<result  column="number" property="number"/>
+			<result  column="note" property="note"/>
+		</collection>
+	</resultMap>
+	<select id="findUserAndOrderRstMap" resultMap="userAndOrderRstMap">
+		SELECT
+			u.*, o.id oid,
+			o.number,
+			o.createtime,
+			o.note
+		FROM
+			`user` u
+		LEFT JOIN orders o ON u.id = o.user_id
 	</select>
 </mapper>
