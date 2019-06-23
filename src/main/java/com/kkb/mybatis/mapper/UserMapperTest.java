@@ -157,4 +157,17 @@ public class UserMapperTest {
 		//关闭session
 		session.close();
 	}
+
+	@Test
+	public void testfindOrdersAndUserRstMap()throws Exception{
+		//获取session
+		SqlSession session = sqlSessionFactory.openSession();
+		//获限mapper接口实例
+		UserMapper userMapper = session.getMapper(UserMapper.class);
+		//查询订单信息
+		List<OrdersExt> list = userMapper.findOrdersAndUserRstMap();
+		System.out.println("findOrdersAndUsersRstMap" + list);
+		//关闭session
+		session.close();
+	}
 }

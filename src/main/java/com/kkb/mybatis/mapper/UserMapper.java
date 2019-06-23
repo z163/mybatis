@@ -12,4 +12,6 @@ public interface UserMapper {
 	public void deleteUserById(int id) throws Exception;
 	public void updateUser(User user) throws Exception;
 	public List<OrdersExt> findOrdersList() throws Exception;
+	public List<OrdersExt> findOrdersAndUserRstMap() throws Exception;
 }
+
