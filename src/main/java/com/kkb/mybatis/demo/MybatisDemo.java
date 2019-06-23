@@ -16,7 +16,6 @@ import com.kkb.mybatis.po.UserQueryVO;
 public class MybatisDemo {
 	
 	private SqlSessionFactory sqlSessionFactory;
-	private int myKey;
 
 	/**
 	 * @Before注解的方法会在@Test注解的方法之前执行
@@ -82,10 +81,9 @@ public class MybatisDemo {
 	//		user.setAddress("河南郑州");
 	//		user.setSex("1");
 	//		// user.setPrice(1999.9f);
-	//		int key = sqlSession.insert("com.kkb.mybatis.mapper.UserMapper.insertUser", user);  // 1
+	//		sqlSession.insert("com.kkb.mybatis.mapper.UserMapper.insertUser", user);  // 1
 	//		//提交事务
 	//		sqlSession.commit();
-	//		myKey = user.getId();
 	//		System.out.println("insertion is tested: " + user.getId());
 	//	} catch (Exception e) {
 	//		e.printStackTrace();
