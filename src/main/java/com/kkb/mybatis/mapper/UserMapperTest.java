@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.kkb.mybatis.po.OrdersExt;
 import com.kkb.mybatis.po.User;
 
 public class UserMapperTest {
@@ -142,5 +143,18 @@ public class UserMapperTest {
 				sqlSession.close();
 			}
 		}
+	}
+
+	@Test
+	public void testFindOrdersList()throws Exception{
+		//获取session
+		SqlSession session = sqlSessionFactory.openSession();
+		//获限mapper接口实例
+		UserMapper userMapper = session.getMapper(UserMapper.class);
+		//查询订单信息
+		List<OrdersExt> list = userMapper.findOrdersList();
+		System.out.println("findOrdersList: " + list);
+		//关闭session
+		session.close();
 	}
 }
