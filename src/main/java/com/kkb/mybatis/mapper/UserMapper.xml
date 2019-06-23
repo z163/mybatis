@@ -38,6 +38,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update user set username=#{username},birthday=#{birthday},sex=#{sex},address=#{address}
 		where id=#{id}
 	</update>
+	
+	<!-- 使用包装类型查询用户 
+		使用ognl从对象中取属性值，如果是包装对象可以使用.操作符来取内容部的属性
+	-->
+	<select id="findUserList" parameterType="UserQueryVO" resultType="user">
+		SELECT * FROM user where username like '%${user.username}%'
+	</select>
+	
 
 	<!-- 查询所有订单信息 -->
 	<select id="findOrdersList" resultType="com.kkb.mybatis.po.OrdersExt">

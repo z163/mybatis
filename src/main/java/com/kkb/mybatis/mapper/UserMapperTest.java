@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import com.kkb.mybatis.po.OrdersExt;
 import com.kkb.mybatis.po.User;
+import com.kkb.mybatis.po.UserQueryVO;
 
 public class UserMapperTest {
 
@@ -144,6 +145,25 @@ public class UserMapperTest {
 			}
 		}
 	}
+	
+	@Test
+	public void testFindUserList() throws Exception {
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		//获得mapper的代理对象
+		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+		//创建QueryVo对象
+		UserQueryVO queryVo = new UserQueryVO();
+		//创建user对象
+		User user = new User();
+		user.setUsername("小明");
+
+		queryVo.setUser(user);
+		//根据queryvo查询用户
+		List<User> list = userMapper.findUserList(queryVo);
+		System.out.println(list);
+		sqlSession.close();
+	}
+
 
 	@Test
 	public void testFindOrdersList()throws Exception{
